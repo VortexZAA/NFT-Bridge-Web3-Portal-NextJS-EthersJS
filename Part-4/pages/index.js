@@ -629,7 +629,7 @@ async function initTransfer() {
             3. Transfer To:
           </Text>
           <Grid css={{ ml: "$10", mr: "$10", mb: "$10" }}>
-            <NextUIProvider theme={droptheme}>
+            <NextUIProvider /* s */>
               <Text css={{ mb: "$2" }} h4>
                 Destination
               </Text>

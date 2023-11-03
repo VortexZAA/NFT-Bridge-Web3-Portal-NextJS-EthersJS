@@ -1,30 +1,30 @@
 import  React from 'react';
 import { useState } from 'react';
-import { Grid, Card, Text, Col, Container, Spacer, Checkbox,
-  Button, Row, Dropdown, Modal, Image} from "@nextui-org/react";
+//@ts-ignore
+import { Grid, Card, Text, Col, Container, Spacer, Checkbox, Button, Row, Dropdown, Modal, Image} from "@nextui-org/react";
 import { ethers } from 'ethers';
-import { cipherEth, simpleCrypto, bridgeWallet } from '../engine/configuration';
-import { goeNFT, goeCustody, goeErc20, goerpc } from '../engine/configuration'
-import { bsctNFT, bsctCustody, bsctErc20, bsctrpc } from '../engine/configuration'
-import { mumNFT, mumCustody, mumErc20, mumrpc } from '../engine/configuration'
-import 'sf-font';
-import 'aos/dist/aos.css';
-import BridgeABI from '../engine/BridgeABI.json'
-import CustodyABI from '../engine/CustodyABI.json'
-import NftABI from '../engine/NftABI.json'
-import Erc20ABI from '../engine/Erc20ABI.json'
+import { cipherEth, simpleCrypto, bridgeWallet } from '@/engine/configuration';
+import { goeNFT, goeCustody, goeErc20, goerpc } from '@/engine/configuration'
+import { bsctNFT, bsctCustody, bsctErc20, bsctrpc } from '@/engine/configuration'
+import { mumNFT,polyNFT, mumCustody, mumErc20, mumrpc } from '@/engine/configuration'
+/* import 'sf-font';
+import 'aos/dist/aos.css'; */
+import BridgeABI from '@/engine/BridgeABI.json'
+import CustodyABI from '@/engine/CustodyABI.json'
+import NftABI from '@/engine/NftABI.json'
+import Erc20ABI from '@/engine/Erc20ABI.json'
 import Web3Modal from 'web3modal'
 import Web3 from 'web3'
 import axios from 'axios';
 import Sourcebridge from '../engine/interfaces/sourcebridge';
 import Circles from '../engine/circles';
 import detectEthereumProvider from '@metamask/detect-provider';
-import { createTheme, NextUIProvider } from "@nextui-org/react";
+import {  createTheme,  NextUIProvider } from "@nextui-org/react";
 
-/* const droptheme = createTheme({
+const droptheme = createTheme({
   type: "dark",
   theme: {
-    fontFamily:'SF Pro Display',
+    //fontFamily:'SF Pro Display',
     colors: {
       primaryLight: '#00000020',
       primaryLightHover: '#00000020',
@@ -46,17 +46,17 @@ import { createTheme, NextUIProvider } from "@nextui-org/react";
     space: {},
     fonts: {}
   }
-}) */
+})
 
 
 export default function Home() {
 
   const [id, getId] = useState(0);
   const [customPay, useToken] = React.useState(true);
-  const [nfts, setNfts] = useState([]);
-  const [sourceNft, getSourceNft] = useState([]);
-  const [sourceRpc, getSourceRpc] = useState([]);
-  const [confirmLink, getConfirmLink] = useState([]);
+  const [nfts, setNfts]:any = useState([]);
+  const [sourceNft, getSourceNft]:any = useState([]);
+  const [sourceRpc, getSourceRpc]:any = useState([]);
+  const [confirmLink, getConfirmLink]:any = useState([]);
   const [visible, setVisible] = React.useState(false);
   const handler = () => setVisible(true);
   const closeHandler = () => {
@@ -67,8 +67,8 @@ export default function Home() {
   const [erc20Contract, getErc20] = useState([]);
   const [selected, setSelected] = React.useState(new Set(["Set Destination"]));
   const destChain = React.useMemo(() => Array.from(selected).join(", ").replaceAll("_", " "),[selected])
-  
-  const blockImage = React.useMemo((resolve, reject) => {
+  //@ts-ignore
+  const blockImage = React.useMemo((resolve:any , reject:any )=> {
     var eth = "Ethereum";
     var bsc = "Binance Smart Chain";
     var pol = "Polygon";
@@ -80,7 +80,7 @@ export default function Home() {
       return <img src="polygonwhite.png" width={"160px"} />;
     }
   });
-
+  //@ts-ignore
   const destImg = React.useMemo((resolve, reject) => {
     var eth = "Ethereum";
     var bsc = "Binance Smart Chain";
@@ -144,7 +144,7 @@ export default function Home() {
       );
     }
   });
-
+//@ts-ignore
   const sourceImg = React.useMemo((resolve, reject) => {
     if (sourceRpc == goerpc) {
       return (
@@ -231,7 +231,7 @@ export default function Home() {
   });
 
 
-  var account = null;
+  var account :any = null;
   var web3 = null;
 
   async function setSource(){
@@ -241,36 +241,42 @@ export default function Home() {
     await providera.send('eth_requestAccounts');
     var accounts = await web3.eth.getAccounts();
     account = accounts[0];
+    //@ts-ignore
     document.getElementById('wallet-address').textContent = account;
     var goe = "0x5";
     var mm = "0x13881";
     var bsct = "0x61";
     const connected = await detectEthereumProvider();
+    //@ts-ignore
     if (connected.chainId == goe) {
       var sNft = goeNFT
       var sCustody = goeCustody
       var sRpc = goerpc
       var erc20 = goeErc20
     }
+    //@ts-ignore
     else if (connected.chainId == mm) {
       var sNft = mumNFT
       var sCustody = mumCustody
       var sRpc = mumrpc
       var erc20 = mumErc20
     }
+    //@ts-ignore
     else if (connected.chainId == bsct) {
       var sNft = bsctNFT
       var sCustody = bsctCustody
       var sRpc = bsctrpc
       var erc20 = bsctErc20
     }
+    //@ts-ignore
     const provider = new ethers.providers.JsonRpcProvider(sRpc)
-    const key = simpleCrypto.decrypt(cipherEth)
+    const key:any = simpleCrypto.decrypt(cipherEth)
     const wallet = new ethers.Wallet(key, provider);
+    //@ts-ignore
     const contract = new ethers.Contract(sNft, NftABI, wallet);
-    const itemArray = [];
-    await contract.walletOfOwner(account).then((value => {
-    value.forEach(async(id) => {
+    const itemArray :any= [];
+    await contract.walletOfOwner(account).then((value:any) => {
+    value.forEach(async(id:any) => {
         let token = parseInt(id, 16)             
           const rawUri = contract.tokenURI(token)
           const Uri = Promise.resolve(rawUri)
@@ -282,7 +288,7 @@ export default function Home() {
             });
             return metadata;
           })
-          getUri.then(value => {
+          getUri.then((value:any) => {
             let rawImg = value.data.image
             var name = value.data.name
             var desc = value.data.description
@@ -297,12 +303,17 @@ export default function Home() {
               itemArray.push(meta)
             })
           })
-          }))
+          })
     await new Promise(r => setTimeout(r, 2000));
+    //@ts-ignore
     console.log("Wallet Refreshed : " + sRpc)
+    //@ts-ignore
     getSourceNft(sNft);
+    //@ts-ignore
     getErc20(erc20);
+    //@ts-ignore
     getSourceCustody(sCustody);
+    //@ts-ignore
     getSourceRpc(sRpc);
     setNfts(itemArray);
   }
@@ -324,7 +335,7 @@ async function initTransfer() {
   } else if (eth == destChain) {
     var dCustody = goeCustody;
     var dRpc = goerpc;
-    var explorer = "https://goerli.etherscan.io/tx/";
+    var explorer:string = "https://goerli.etherscan.io/tx/";
     var dNFT = goeNFT;
   }
   const tokenId = id;
@@ -333,23 +344,29 @@ async function initTransfer() {
   const provider = new ethers.providers.Web3Provider(connection);
   const signer = provider.getSigner();
   const userWallet = await signer.getAddress();
+  //@ts-ignore
   const ethprovider = new ethers.providers.JsonRpcProvider(dRpc);
   const ethKey = simpleCrypto.decrypt(cipherEth);
+  //@ts-ignore
   var wallet = new ethers.Wallet(ethKey, ethprovider);
   const sNFTCol = new ethers.Contract(sourceNft, NftABI, signer);
+  //@ts-ignore
   const tokenContract = new ethers.Contract(erc20Contract, Erc20ABI, signer);
+  //@ts-ignore
   const ethNFTCustody = new ethers.Contract(dCustody, CustodyABI, wallet);
+  //@ts-ignore
   const dNFTCont = new ethers.Contract(dNFT, BridgeABI, wallet);
   handler();
   await new Promise((r) => setTimeout(r, 1000));
   let init = 'Initializing Transfer...'
+  //@ts-ignore
   document.getElementById("displayconfirm1").innerHTML = init
   let confirmHolder = await sNFTCol.ownerOf(tokenId);
-  let bridgeHolder = await dNFTCont.ownerOf(tokenId).catch(async (error)=> {
+  let bridgeHolder = await dNFTCont.ownerOf(tokenId).catch(async (error:any)=> {
     console.log('Bridge NFT not present, Standby...');
     console.log('Bridge NFT Mint at Destination Processing');
   });
-  await dNFTCont.ownerOf(tokenId).catch(async (error) => {
+  await dNFTCont.ownerOf(tokenId).catch(async (error:any) => {
     if (error) {
         const rawTxn = await dNFTCont.populateTransaction.bridgeMint(
           bridgeWallet,
@@ -401,24 +418,30 @@ async function initTransfer() {
     }
  }
   let status1 = "Verifying Details..."
+  //@ts-ignore
   document.getElementById("displayconfirm1").innerHTML = status1
   await new Promise((r) => setTimeout(r, 4000));
   let status2 = "Verified, Bridge Initialized..."
+  //@ts-ignore
   document.getElementById("displayconfirm1").innerHTML = status2
   await new Promise((r) => setTimeout(r, 4000));
   let status3 = "Please Approve NFT Transfer to Bridge."
+  //@ts-ignore
   document.getElementById("displayconfirm1").innerHTML = status3
+  //@ts-ignore
   const sNFTCustody = new ethers.Contract(sourceCustody, CustodyABI, signer);
   const tx1 = await sNFTCol.setApprovalForAll(sourceCustody, true);
   await tx1.wait();
   console.log("Approval to Transfer NFT Received from User!");
   let status4 = "Approval Received! Processing..."
+  //@ts-ignore
   document.getElementById("displayconfirm1").innerHTML = status4
   await new Promise((r) => setTimeout(r, 4000));
   let status5 = "Please Execute NFT Transfer to Bridge."
   if (customPay == true) {
     const cost = await sNFTCustody.costCustom();
     let options = { gasLimit: 3000000 };
+    //@ts-ignore
     document.getElementById("displayconfirm1").innerHTML = status5
     const tx2 = await tokenContract.approve(sourceCustody, cost);
     await tx2.wait();
@@ -429,15 +452,19 @@ async function initTransfer() {
   else {
     const costNative = await sNFTCustody.costNative();
     let options = { gasLimit: 3000000, value: costNative };
+    //@ts-ignore
     document.getElementById("displayconfirm1").innerHTML = status5
     const tx3 = await sNFTCustody.retainNFTN(tokenId, options);
     await tx3.wait();
   }
   let status6 = "NFT has been transferred to Bridge!!" 
   let status7 = "In Transit to destination..."
+  //@ts-ignore
   document.getElementById("displayconfirm1").innerHTML = status6
+  //@ts-ignore
   document.getElementById("displayconfirm4").innerHTML = status7
   await new Promise((r) => setTimeout(r, 4000));
+  //@ts-ignore
   console.log('Transferring to Destination Via: '+ dRpc);
   let gas = { gasLimit: 3000000 };
   let rawTxn = await ethNFTCustody.populateTransaction.releaseNFT(
@@ -449,14 +476,19 @@ async function initTransfer() {
   let receipt = await signedTxn.wait();
   if (receipt) {
     var confirmOut6 = ''
-    var confirmOut1 = 'Transfer has been completed!'
-    var confirmOut2 = 'Click for more info: '
-    var confirmOut4 =  explorer + signedTxn.hash
-    var confirmOut5 = 'Transaction Info'
+    var confirmOut1:any = 'Transfer has been completed!'
+    var confirmOut2:any = 'Click for more info: '
+    //@ts-ignore
+    var confirmOut4:any =  explorer + signedTxn.hash
+    var confirmOut5:any = 'Transaction Info'
     await new Promise((r) => setTimeout(r, 4000));
+    //@ts-ignore
     document.getElementById("displayconfirm1").innerHTML = confirmOut1
+    //@ts-ignore
     document.getElementById("displayconfirm2").innerHTML = confirmOut2
+    //@ts-ignore
     document.getElementById("displayconfirm3").innerHTML = confirmOut5
+    //@ts-ignore
     document.getElementById("displayconfirm4").innerHTML = confirmOut6
   } else {
     console.log("Error submitting transaction");
@@ -468,7 +500,7 @@ async function initTransfer() {
   return (
     <div>
       <Circles />
-      <Container sm="true">
+      <Container sm={true}>
         <img
           src="nftbridge2.png"
           style={{ maxWidth: "250px", opacity: "90%", marginTop: "20px" }}
@@ -513,16 +545,16 @@ async function initTransfer() {
           </Col>
         </Grid>
       </Container>
-      <Container sm="true">
+      <Container sm={true}>
         <Card
           data-aos="slide-left"
           data-aos-duration="2200"
           data-aos-offset="100"
-          css={{
+          /* css={{
             $$cardColor: "#00000020",
             marginBottom: "$5",
             boxShadow: "0px 2px 8px #ffffff50",
-          }}
+          }} */
         >
           <Text
             css={{
@@ -538,8 +570,8 @@ async function initTransfer() {
           <Grid css={{ ml: "$10", mr: "$10", mb: "$10" }}>
             <Sourcebridge />
             <Button
-              shadow
-              auto
+              shadow={true}
+              auto={true}
               color="secondary"
               css={{
                 width: "100%",
@@ -572,7 +604,7 @@ async function initTransfer() {
             2. Select the NFT to Transfer
           </Text>
           <Grid.Container justify="flex-start" gap={2}>
-            {nfts.map((nft, i) => {
+            {nfts.map((nft:any, i:any) => {
               return (
                 <Grid key={i}>
                   <a>
@@ -586,7 +618,7 @@ async function initTransfer() {
                       onPress={() => getId(nft.tokenId)}
                     >
                       <Card.Image src={nft.img} />
-                      <Card.Body sm="true" key={i}>
+                      <Card.Body sm={true} key={i}>
                         <h3
                           style={{
                             color: "#9D00FF",
@@ -657,10 +689,10 @@ async function initTransfer() {
                     backgroundColor: "#00000010",
                   }}
                   aria-label="Single selection actions"
-                  disallowEmptySelection
-                  selectionMode="single"
-                  selectedKeys={selected}
-                  onSelectionChange={setSelected}
+                  /* disallowEmptySelection
+                  selectionMode="single" */
+                  /* selectedKeys={selected}
+                  onSelectionChange={setSelected} */
                 >
                   <Dropdown.Item key="Ethereum">
                     <img

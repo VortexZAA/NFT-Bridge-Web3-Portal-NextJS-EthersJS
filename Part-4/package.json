@@ -1,0 +1,29 @@
+{
+  "name": "nftbridge",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@metamask/detect-provider": "^2.0.0",
+    "@nextui-org/react": "^1.0.0-beta.12",
+    "@nextui-org/theme": "^2.1.9",
+    "aos": "^2.3.4",
+    "axios": "^1.6.0",
+    "ethers": "^6.8.0",
+    "next": "14.0.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "sf-font": "^1.0.0",
+    "simple-crypto-js": "^3.0.1",
+    "web3": "^4.2.1",
+    "web3modal": "^1.9.12"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.33"
+  }
+}

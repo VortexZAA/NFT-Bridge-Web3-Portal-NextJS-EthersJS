@@ -7,7 +7,7 @@ import { goeNFT, goeCustody, goerpc } from '../configuration';
 import { bsctNFT, bsctCustody, bsctrpc } from '../configuration';
 import { mumNFT, mumCustody, mumrpc } from '../configuration';
 
-const droptheme = createTheme({
+/* const droptheme = createTheme({
   type: "dark",
   theme: {
     fontFamily:'SF Pro Display',
@@ -32,7 +32,7 @@ const droptheme = createTheme({
     space: {},
     fonts: {}
   }
-})
+}) */
 
 export default function sourcebridge(){
   const [sourceNft, getSourceNft] = useState([]);
@@ -103,7 +103,7 @@ async function sourceChain() {
     sourceChain();
   }, [selected])
 return (
-  <NextUIProvider theme={droptheme}>
+  <NextUIProvider /* theme={droptheme} */>
 
             <Text css={{mb:'$2'}} h4>Source</Text>
 
